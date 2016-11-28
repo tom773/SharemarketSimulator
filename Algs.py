@@ -461,10 +461,10 @@ class ShareMarket:
 
         quit()
 
-# Open File and read the account balance. Nothing should happen
-#accountFileName = 'account.txt'
-#account = Account(accountFileName)
-
-# Start the actual banking app. Something should happen
-#tsx = TSX(account)
-#tsx.start()
+# # Open File and read the account balance. Nothing should happen
+# accountFileName = 'account.txt'
+# account = Account(accountFileName)
+#
+# # Start the actual banking app. Something should happen
+# tsx = TSX(account)
+# tsx.start()

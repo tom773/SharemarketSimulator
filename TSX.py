@@ -43,6 +43,17 @@ def getChange(chosenStock):
     else:
         return "Negative"
 
+# Dow Algorithms
+def getDow():
+
+    with open("TempDow.txt", 'r') as Dow:
+
+        dowstring = str(Dow.read())
+        DowPrices = eval(dowstring)
+
+    return DowPrices
+
+
 # INITIALISE DEFAULTS
 
 with open('stocksBought.txt', 'r') as stockFile:
@@ -56,16 +67,6 @@ with open('Dow30.txt', 'r') as Dow30:
     for line in Dow30:
         for word in line.split():
             Dow30List.append(word)
-# Dow Algorithms
-def getDow():
-
-    with open("TempDow.txt", 'r') as Dow:
-
-        dowstring = str(Dow.read())
-        DowPrices = eval(dowstring)
-
-    return DowPrices
-
 
 def createListofStocksForDow(list):
 
@@ -233,8 +234,6 @@ class MainSMPage(tk.Frame):
 
         prices = getDow()
 
-        changes = getChangeDictDow()
-
         nameVars = dict()
 
         num = 1
@@ -261,6 +260,7 @@ class MainSMPage(tk.Frame):
             nameVars[stockName] = tk.Label(self, text=(" ") + prices[stockName]).grid(row=numRow2, column=1, columnspan=1,
                                                                                sticky='W')
 
+
 class CheckStock(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -281,12 +281,10 @@ class CheckStock(tk.Frame):
 
         price = str(getPrice(chosenStock))
 
-        priceLbl = tk.Label(self, text=(stock + " | " + str(price)), font=BIG_FONT)
+        priceLbl = tk.Label(self, text=(stock + "  | " + str(price)), font=BIG_FONT)
 
         priceLbl.grid(row=2, column=1)
 
-        back = ttk.Button(self, text="Home", command=lambda: controller.show_frame(MainSMPage))
-        back.grid(row=3, column=5)
 
 class buySellMenuStartPage(tk.Frame):
 
