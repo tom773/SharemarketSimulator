@@ -272,19 +272,20 @@ class CheckStock(tk.Frame):
         enterstock = ttk.Entry(self)
         enterstock.grid(row=1, column=1)
 
-        ok = ttk.Button(self, text="GO", command=lambda: self.displayPrice(controller, enterstock.get()))
+        priceLbl = tk.Label(self, font=BIG_FONT)
+
+        priceLbl.grid(row=2, column=1)
+
+        ok = ttk.Button(self, text="GO", command=lambda: self.displayPrice(controller, enterstock.get(), priceLbl))
         ok.grid(row=1, column=2)
 
-    def displayPrice(self, controller, stock):
+    def displayPrice(self, controller, stock, priceLbl):
 
         chosenStock = str(stock)
 
         price = str(getPrice(chosenStock))
 
-        priceLbl = tk.Label(self, text=(stock + "  | " + str(price)), font=BIG_FONT)
-
-        priceLbl.grid(row=2, column=1)
-
+        priceLbl['text'] = chosenStock + " : " + price
 
 class buySellMenuStartPage(tk.Frame):
 
