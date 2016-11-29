@@ -82,8 +82,6 @@ def createListofStocksForDow(list):
 
         DowDict.write(str(prices))
 
-    print("Done")
-
     return prices
 
 
@@ -100,8 +98,6 @@ def createChangeDow(list):
     with open("TempChangeDow.txt", 'w') as change:
 
         change.write(str(changeDow))
-
-    print("Done")
 
 def getChangeDictDow():
 
