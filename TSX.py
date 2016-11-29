@@ -24,13 +24,16 @@ def getOHCL(chosenStock):
 
     baseUrl = "http://finance.yahoo.com/d/quotes.csv?s=" + str(chosenStock) + "&f=c1"
 
-    with urllib.request.urlopen(baseUrl) as response:
-        data = response.read()
+    try:
+        with urllib.request.urlopen(baseUrl) as response:
+            data = response.read()
 
-    if str('+') in str(data):
-        return "UpArrow.png"
-    else:
-        return "DownArrow.png"
+        if str('+') in str(data):
+            return "UpArrow.png"
+        else:
+            return "DownArrow.png"
+    except urllib.error.HTTPError:
+        print("Oh No! ", baseUrl, "Timed Out!!!!!!!")
 
 def getChange(chosenStock):
     baseUrl = "http://finance.yahoo.com/d/quotes.csv?s=" + str(chosenStock) + "&f=c1"
@@ -122,6 +125,7 @@ t2.start()
 BIG_FONT = ('Impact', 20)
 BIG_BIG_FONT = ('Impact', 35)
 MEDIUM_FONT = ('Times New Roman', 18)
+SMALL_FONT = ('Impact', 14)
 
 balance = 50000
 
@@ -293,10 +297,25 @@ class buySellMenuStartPage(tk.Frame):
         main.grid(row=0, columnspan=5)
 
         slbl =  tk.Label(self, text="Sell", font=BIG_FONT)
-        slbl.grid(row=2, column=5)
+        slbl.grid(row=2, column=6)
 
         home = ttk.Button(self, text="Home", command=lambda: controller.show_frame(MainSMPage))
         home.grid(row=0, column=5)
+
+        blbl = tk.Label(self, text="Buy", font=BIG_FONT)
+        blbl.grid(row=2, column=1)
+
+        enterstock = tk.Entry(self, width=20)
+        enterstock.grid(row=3, column=1)
+
+        howmuch = tk.Entry(self, width=5)
+        howmuch.grid(row=3, column=2)
+
+        buttongo = ttk.Button(self, text="GO", command=lambda: confirm(enterstock.get(), howmuch.get(), totallbl))
+        buttongo.grid(row=3, column=3)
+
+        totallbl = tk.Label(self, font=SMALL_FONT)
+        totallbl.grid(row=4, column=1)
 
         numRow = 2
 
@@ -304,11 +323,22 @@ class buySellMenuStartPage(tk.Frame):
 
             numRow = numRow + 1
 
-            tk.Label(self, text=(stock), font=MEDIUM_FONT).grid(row=numRow, column=4, sticky='e')
+            tk.Label(self, text=(stock), font=MEDIUM_FONT).grid(row=numRow, column=5, sticky='e')
 
-            tk.Label(self, text=("|  " + str(stocksBought[stock])), font= MEDIUM_FONT).grid(row=numRow, column=5, sticky='w')
+            tk.Label(self, text=("|  " + str(stocksBought[stock])), font= MEDIUM_FONT).grid(row=numRow, column=6, sticky='w')
 
             ttk.Button(self, text="Sell",).grid(row=numRow, column=6, sticky='w')
+
+        def confirm(chosenStock, amount, totallbl):
+
+            total = str(float(getPrice(chosenStock)) * float(amount))
+
+            totallbl['text'] = "Total Price: " + total
+
+            placeOrder = ttk.Button(self, text="Confirm")
+            placeOrder.grid(row=4, column=3)
+
+
 
 app = TSXSharemarketApp()
 
