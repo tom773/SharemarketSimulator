@@ -56,11 +56,12 @@ def getDow():
 
 # INITIALISE DEFAULTS
 
-with open('stocksBought.txt', 'r') as stockFile:
-
-    stockstring = str(stockFile.read())
-    stocksBought = eval(stockstring)
-
+try:
+    with open('stocksBought.txt', 'r') as stockFile:
+        stockstring = str(stockFile.read())
+        stocksBought = eval(stockstring)
+except FileNotFoundError:
+    stocksBought = {}
 
 with open('Dow30.txt', 'r') as Dow30:
     Dow30List = []
